@@ -2,7 +2,7 @@
 //  equipappUITests.swift
 //  equipappUITests
 //
-//  Created by Nathan Sinclair on 27/10/18.
+//  Created by Nathan Sinclair on 22/11/18.
 //  Copyright © 2018 Nathan Sinclair. All rights reserved.
 //
 

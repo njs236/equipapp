@@ -2,11 +2,12 @@
 //  AppDelegate.swift
 //  equipapp
 //
-//  Created by Nathan Sinclair on 27/10/18.
+//  Created by Nathan Sinclair on 22/11/18.
 //  Copyright © 2018 Nathan Sinclair. All rights reserved.
 //
 
 import UIKit
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        GMSServices.provideAPIKey("AIzaSyBE9sNAykr_FCyFWjdl-kKc2CeufTSq1pI")
         return true
     }
 
