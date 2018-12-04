@@ -1,12 +1,18 @@
-package com.nathan.equipapp
+package com.nathan.equipapp.ui
 
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import com.google.firebase.firestore.FirebaseFirestore
+import com.nathan.equipapp.R
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,17 +23,26 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [TalkFragment.OnFragmentInteractionListener] interface
+ * [QuestionFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [TalkFragment.newInstance] factory method to
+ * Use the [QuestionFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class TalkFragment : Fragment() {
+
+class NotificationFragment: Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    var db = FirebaseFirestore.getInstance()
+    private val TAG = this.javaClass.simpleName
+    var descriptionField :EditText?= null
+    var dateField :EditText? = null
+    var timeField :EditText?= null
+    var sendButton: Button? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +50,26 @@ class TalkFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        // form fills out and stores notifications.
+
+        sendButton?.setOnClickListener { result ->
+            //send to firebase
+            val data = HashMap<String, Any?>()
+            data["description"] = descriptionField?.text
+            val date = dateField?.text
+            val time = timeField?.text
+            // change date to local time.
+            val dateTime = "$date $time UTC+13"
+            data["date"] = dateTime
+
+            db.collection("questions").add(data).addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot written with ID:" + documentReference.id)
+            }.addOnFailureListener{e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+        }
+        //see the notification service for receiving notifications from firebase.
     }
 
     override fun onCreateView(
@@ -42,12 +77,19 @@ class TalkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_talk, container, false)
+        val view =  inflater.inflate(R.layout.fragment_notis, container, false)
+        descriptionField = view.findViewById(R.id.notiDescription)
+        dateField = view.findViewById(R.id.notiDate)
+        timeField = view.findViewById(R.id.notiTime)
+        sendButton = view.findViewById(R.id.notiSend)
+        return view
+
+        // will be getting input names from this method.
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
-        listener?.onTalkInteraction(uri)
+        listener?.onNotificationInteraction(uri)
     }
 
     override fun onAttach(context: Context) {
@@ -77,7 +119,7 @@ class TalkFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onTalkInteraction(uri: Uri)
+        fun onNotificationInteraction(uri: Uri)
     }
 
     companion object {
@@ -87,12 +129,12 @@ class TalkFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment TalkFragment.
+         * @return A new instance of fragment QuestionFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            TalkFragment().apply {
+            QuestionFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

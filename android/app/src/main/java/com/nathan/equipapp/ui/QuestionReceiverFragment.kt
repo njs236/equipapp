@@ -1,12 +1,14 @@
-package com.nathan.equipapp
-
+package com.nathan.equipapp.ui
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.firestore.FirebaseFirestore
+import com.nathan.equipapp.R
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,17 +19,24 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [DetailsFragment.OnFragmentInteractionListener] interface
+ * [QuestionFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [DetailsFragment.newInstance] factory method to
+ * Use the [QuestionFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class DetailsFragment : Fragment() {
+
+class QuestionReceiverFragment: Fragment() {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private val TAG = this.javaClass.simpleName
+
+    var db = FirebaseFirestore.getInstance()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,19 +44,46 @@ class DetailsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        var questions = db.collection("questions")
+
+        questions.get().addOnSuccessListener { result ->
+            for (document in result) {
+                val question = document.get("question")
+                //optional author
+                val author = document.get("author")
+                val speaker = document.get("speaker")
+                val cr_date = document.get("cr_date")
+                Log.d(TAG, "author: $author")
+                Log.d(TAG, "speaker: $speaker")
+                Log.d(TAG, "cr_date: $cr_date")
+                Log.d(TAG, "question: $question")
+
+                //TODO: writing a mutable list that holds the data needed for the table
+            }
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "Error getting documents: ", exception)
+        }
+
+
     }
+
+    //TODO creating table with layout for questions received.
+
+    // Table displays the question, the speaker and optionally the author. sort by creation date.
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        return inflater.inflate(R.layout.fragments_questions, container, false)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
-        listener?.onDetailsInteraction(uri)
+        listener?.onQuestionsInteraction(uri)
     }
 
     override fun onAttach(context: Context) {
@@ -77,7 +113,7 @@ class DetailsFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onDetailsInteraction(uri: Uri)
+        fun onQuestionsInteraction(uri: Uri)
     }
 
     companion object {
@@ -87,12 +123,12 @@ class DetailsFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailsFragment.
+         * @return A new instance of fragment QuestionFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            DetailsFragment().apply {
+            QuestionFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
