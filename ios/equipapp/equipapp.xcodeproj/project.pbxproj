@@ -19,6 +19,10 @@
 		DF48EAFC21A5FCBB00C5FE4E /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EAFB21A5FCBB00C5FE4E /* QuestionViewController.swift */; };
 		DF7136B721B4CC52000B9C01 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7136B621B4CC52000B9C01 /* WebKit.framework */; };
 		DF7136B921B4DE68000B9C01 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */; };
+		DF9C95F421B6021A00D8513F /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C95F321B6021A00D8513F /* QuestionsViewController.swift */; };
+		DF9C95F621B6022E00D8513F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C95F521B6022E00D8513F /* NotificationViewController.swift */; };
+		DF9C95F921B6038800D8513F /* QuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C95F821B6038800D8513F /* QuestionTableViewCell.swift */; };
+		DF9C95FB21B6139F00D8513F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF9C95FA21B6139F00D8513F /* GoogleService-Info.plist */; };
 		E5DD5350D55938D64C11E788 /* libPods-equipapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CFE0AC781AD6F32C0E00128 /* libPods-equipapp.a */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +64,10 @@
 		DF48EAFB21A5FCBB00C5FE4E /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		DF7136B621B4CC52000B9C01 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		DF9C95F321B6021A00D8513F /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
+		DF9C95F521B6022E00D8513F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		DF9C95F821B6038800D8513F /* QuestionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionTableViewCell.swift; sourceTree = "<group>"; };
+		DF9C95FA21B6139F00D8513F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ECE91A588C15B13C35095AAC /* Pods-equipapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-equipapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-equipapp/Pods-equipapp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +141,8 @@
 		DF48EAC821A5F89B00C5FE4E /* equipapp */ = {
 			isa = PBXGroup;
 			children = (
+				DF9C95FA21B6139F00D8513F /* GoogleService-Info.plist */,
+				DF9C95F721B6035700D8513F /* Table */,
 				DF48EAC921A5F89B00C5FE4E /* AppDelegate.swift */,
 				DF48EACB21A5F89B00C5FE4E /* ConferenceDetailsController.swift */,
 				DF48EACD21A5F89C00C5FE4E /* MapViewController.swift */,
@@ -142,7 +152,8 @@
 				DF48EAD721A5F8AF00C5FE4E /* Info.plist */,
 				DF48EAF921A5FBDC00C5FE4E /* RecordingsController.swift */,
 				DF48EAFB21A5FCBB00C5FE4E /* QuestionViewController.swift */,
-				DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */,
+				DF9C95F321B6021A00D8513F /* QuestionsViewController.swift */,
+				DF9C95F521B6022E00D8513F /* NotificationViewController.swift */,
 			);
 			path = equipapp;
 			sourceTree = "<group>";
@@ -163,6 +174,15 @@
 				DF48EAED21A5F8AF00C5FE4E /* Info.plist */,
 			);
 			path = equipappUITests;
+			sourceTree = "<group>";
+		};
+		DF9C95F721B6035700D8513F /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */,
+				DF9C95F821B6038800D8513F /* QuestionTableViewCell.swift */,
+			);
+			path = Table;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF48EAD621A5F8AF00C5FE4E /* LaunchScreen.storyboard in Resources */,
+				DF9C95FB21B6139F00D8513F /* GoogleService-Info.plist in Resources */,
 				DF48EAD321A5F8AF00C5FE4E /* Assets.xcassets in Resources */,
 				DF48EAD121A5F89C00C5FE4E /* Main.storyboard in Resources */,
 			);
@@ -325,6 +346,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-equipapp/Pods-equipapp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates.bundle",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
@@ -332,6 +354,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
@@ -348,9 +371,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF7136B921B4DE68000B9C01 /* CustomTableViewCell.swift in Sources */,
+				DF9C95F421B6021A00D8513F /* QuestionsViewController.swift in Sources */,
+				DF9C95F621B6022E00D8513F /* NotificationViewController.swift in Sources */,
 				DF48EACE21A5F89C00C5FE4E /* MapViewController.swift in Sources */,
 				DF48EAFC21A5FCBB00C5FE4E /* QuestionViewController.swift in Sources */,
 				DF48EAFA21A5FBDC00C5FE4E /* RecordingsController.swift in Sources */,
+				DF9C95F921B6038800D8513F /* QuestionTableViewCell.swift in Sources */,
 				DF48EACA21A5F89B00C5FE4E /* AppDelegate.swift in Sources */,
 				DF48EACC21A5F89B00C5FE4E /* ConferenceDetailsController.swift in Sources */,
 			);

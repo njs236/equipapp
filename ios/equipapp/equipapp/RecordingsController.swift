@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Firebase
 
 class RecordingsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var searchBarField: UITextField!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        <#code#>
+        return 1
     }
     
 

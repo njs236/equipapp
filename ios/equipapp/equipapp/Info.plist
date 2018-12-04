@@ -5,22 +5,23 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
-		<dict/>
-		<key>youtu.be</key>
 		<dict>
-			<key>NSTemporaryExceptionMinimumTLSVersion</key>
-			<string>TLSv1.1</string>
-			<key>NSIncludesSubdomains</key>
-			<true/>
-		</dict>
-		<key>youtube.com</key>
-		<dict>
-			<key>NSTemporaryExceptionMinimumTLSVersion</key>
-			<string>TLSv1.1</string>
-			<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-			<true/>
-			<key>NSIncludesSubdomains</key>
-			<true/>
+			<key>youtube.com</key>
+			<dict>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+			<key>youtu.be</key>
+			<dict>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 		</dict>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>

@@ -2,4 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 target 'equipapp' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
 end

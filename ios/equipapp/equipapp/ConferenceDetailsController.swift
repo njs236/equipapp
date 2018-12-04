@@ -11,6 +11,8 @@ import WebKit
 
 class ConferenceDetailsController: UIViewController {
     
+    @IBAction func sendButtonClick(_ sender: Any) {
+    }
     @IBOutlet var putWebView: UIView!
     var webView: WKWebView!
     
