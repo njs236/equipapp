@@ -3,7 +3,7 @@
     <string name="title_map">Map</string>
     <string name="title_details">Details</string>
     <string name="title_talks">Talks</string>
-    <string name="title_question">Questions</string>
+    <string name="title_question">Post Question</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -15,4 +15,9 @@
     <string name="question_hint">Enter your question</string>
     <string name="question_hint_speaker">Enter the speakers name</string>
     <string name="question_send">Send</string>
+    <string name="title_questions">Questions</string>
+    <string name="title_send_notification">Send Notification</string>
+    <string name="hint_noti_name">Enter the name of the notification</string>
+    <string name="hint_noti_time">Enter the time of the event</string>
+    <string name="hint_noti_date">Enter the date of the event</string>
 </resources>
