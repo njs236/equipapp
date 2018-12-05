@@ -1,0 +1,6 @@
+module Pods_equipapp {
+  umbrella header "Pods-equipapp-umbrella.h"
+
+  export *
+  module * { export * }
+}

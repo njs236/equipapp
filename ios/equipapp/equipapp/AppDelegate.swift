@@ -9,6 +9,7 @@
 import UIKit
 import GoogleMaps
 import Firebase
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,9 +21,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        let audioSession = AVAudioSession.sharedInstance()
+ 
+        do {
+            try audioSession.setCategory(AVAudioSession.Category.playback, mode: AVAudioSession.Mode.default, options: AVAudioSession.CategoryOptions.allowAirPlay)
+        } catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
         GMSServices.provideAPIKey("AIzaSyBE9sNAykr_FCyFWjdl-kKc2CeufTSq1pI")
         FirebaseApp.configure()
         db = Firestore.firestore()
+        
+        let settings = db.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        db.settings = settings
+        
+        Auth.auth().signInAnonymously() { (authResult, error) in
+            
+            if let err = error {
+                print ("sign in received error: \(err)")
+                
+            } else {
+                let user = authResult?.user
+                let isAnonymous = user?.isAnonymous
+                let uid = user?.uid
+                
+                print("successfully signed in \(uid)")
+            }
+        }
+            
         return true
     }
 

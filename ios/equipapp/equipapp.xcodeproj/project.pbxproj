@@ -17,6 +17,12 @@
 		DF48EAEC21A5F8AF00C5FE4E /* equipappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EAEB21A5F8AF00C5FE4E /* equipappUITests.swift */; };
 		DF48EAFA21A5FBDC00C5FE4E /* RecordingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EAF921A5FBDC00C5FE4E /* RecordingsController.swift */; };
 		DF48EAFC21A5FCBB00C5FE4E /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EAFB21A5FCBB00C5FE4E /* QuestionViewController.swift */; };
+		DF4C4DC421B7513100DE93D1 /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4C4DC321B7513100DE93D1 /* Question.swift */; };
+		DF4C4DC621B7513E00DE93D1 /* Recording.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4C4DC521B7513E00DE93D1 /* Recording.swift */; };
+		DF4C4DC821B7676800DE93D1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4C4DC721B7676800DE93D1 /* AVFoundation.framework */; };
+		DF4C4DCA21B7676F00DE93D1 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4C4DC921B7676F00DE93D1 /* AVKit.framework */; };
+		DF4C4DCC21B7728700DE93D1 /* RecordingCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4C4DCB21B7728700DE93D1 /* RecordingCellProtocol.swift */; };
+		DF4C4DCF21B7804E00DE93D1 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4C4DCE21B7804E00DE93D1 /* PlayerView.swift */; };
 		DF7136B721B4CC52000B9C01 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF7136B621B4CC52000B9C01 /* WebKit.framework */; };
 		DF7136B921B4DE68000B9C01 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */; };
 		DF9C95F421B6021A00D8513F /* QuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9C95F321B6021A00D8513F /* QuestionsViewController.swift */; };
@@ -62,6 +68,12 @@
 		DF48EAED21A5F8AF00C5FE4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DF48EAF921A5FBDC00C5FE4E /* RecordingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingsController.swift; sourceTree = "<group>"; };
 		DF48EAFB21A5FCBB00C5FE4E /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		DF4C4DC321B7513100DE93D1 /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		DF4C4DC521B7513E00DE93D1 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
+		DF4C4DC721B7676800DE93D1 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DF4C4DC921B7676F00DE93D1 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		DF4C4DCB21B7728700DE93D1 /* RecordingCellProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingCellProtocol.swift; sourceTree = "<group>"; };
+		DF4C4DCE21B7804E00DE93D1 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		DF7136B621B4CC52000B9C01 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		DF9C95F321B6021A00D8513F /* QuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF4C4DCA21B7676F00DE93D1 /* AVKit.framework in Frameworks */,
+				DF4C4DC821B7676800DE93D1 /* AVFoundation.framework in Frameworks */,
 				DF7136B721B4CC52000B9C01 /* WebKit.framework in Frameworks */,
 				E5DD5350D55938D64C11E788 /* libPods-equipapp.a in Frameworks */,
 			);
@@ -110,6 +124,8 @@
 		C0BDE403DDFD095930EDEE38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF4C4DC921B7676F00DE93D1 /* AVKit.framework */,
+				DF4C4DC721B7676800DE93D1 /* AVFoundation.framework */,
 				DF7136B621B4CC52000B9C01 /* WebKit.framework */,
 				1CFE0AC781AD6F32C0E00128 /* libPods-equipapp.a */,
 			);
@@ -141,6 +157,7 @@
 		DF48EAC821A5F89B00C5FE4E /* equipapp */ = {
 			isa = PBXGroup;
 			children = (
+				DF4C4DCD21B7802B00DE93D1 /* AudioPlayer */,
 				DF9C95FA21B6139F00D8513F /* GoogleService-Info.plist */,
 				DF9C95F721B6035700D8513F /* Table */,
 				DF48EAC921A5F89B00C5FE4E /* AppDelegate.swift */,
@@ -176,11 +193,22 @@
 			path = equipappUITests;
 			sourceTree = "<group>";
 		};
+		DF4C4DCD21B7802B00DE93D1 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				DF4C4DCE21B7804E00DE93D1 /* PlayerView.swift */,
+			);
+			name = AudioPlayer;
+			sourceTree = "<group>";
+		};
 		DF9C95F721B6035700D8513F /* Table */ = {
 			isa = PBXGroup;
 			children = (
 				DF7136B821B4DE68000B9C01 /* CustomTableViewCell.swift */,
 				DF9C95F821B6038800D8513F /* QuestionTableViewCell.swift */,
+				DF4C4DC321B7513100DE93D1 /* Question.swift */,
+				DF4C4DC521B7513E00DE93D1 /* Recording.swift */,
+				DF4C4DCB21B7728700DE93D1 /* RecordingCellProtocol.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -255,6 +283,11 @@
 				TargetAttributes = {
 					DF48EAC521A5F89B00C5FE4E = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					DF48EADB21A5F8AF00C5FE4E = {
 						CreatedOnToolsVersion = 10.1;
@@ -346,7 +379,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-equipapp/Pods-equipapp-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates-Firestore.bundle",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
@@ -354,7 +387,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Firestore.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
 			);
@@ -370,11 +403,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF4C4DC621B7513E00DE93D1 /* Recording.swift in Sources */,
+				DF4C4DCC21B7728700DE93D1 /* RecordingCellProtocol.swift in Sources */,
 				DF7136B921B4DE68000B9C01 /* CustomTableViewCell.swift in Sources */,
 				DF9C95F421B6021A00D8513F /* QuestionsViewController.swift in Sources */,
 				DF9C95F621B6022E00D8513F /* NotificationViewController.swift in Sources */,
 				DF48EACE21A5F89C00C5FE4E /* MapViewController.swift in Sources */,
 				DF48EAFC21A5FCBB00C5FE4E /* QuestionViewController.swift in Sources */,
+				DF4C4DCF21B7804E00DE93D1 /* PlayerView.swift in Sources */,
+				DF4C4DC421B7513100DE93D1 /* Question.swift in Sources */,
 				DF48EAFA21A5FBDC00C5FE4E /* RecordingsController.swift in Sources */,
 				DF9C95F921B6038800D8513F /* QuestionTableViewCell.swift in Sources */,
 				DF48EACA21A5F89B00C5FE4E /* AppDelegate.swift in Sources */,

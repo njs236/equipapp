@@ -10,12 +10,30 @@ import UIKit
 import Firebase
 
 class QuestionsViewController: UIViewController,UITableViewDelegate, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    @IBOutlet var tableView: UITableView!
+    var questions = [Question]()
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("rowsInSection: \(questions.count)")
+        return questions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        print("dequeing cell: \(questions[indexPath.row])")
+       let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTableCell") as! QuestionTableViewCell
+        let data = questions[indexPath.row]
+        cell.speakerLabel.text = "For Speaker: \(data.speaker)"
+        if (data.author != ""){
+        cell.authorLabel.text = "From: \(data.author)"
+        }
+        cell.questionLabel.text = data.question
+        
+        
+        
+        return cell
     }
     
     var handle: AuthStateDidChangeListenerHandle!
@@ -25,29 +43,30 @@ class QuestionsViewController: UIViewController,UITableViewDelegate, UITableView
         
         let db = Firestore.firestore()
         
-        let settings = db.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        db.settings = settings
-        
+    
+        questions.removeAll()
         db.collection("questions").getDocuments() { (querySnapshot, err) in
             if let err=err {
                 print ("Error getting documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
-                    let author = document.get("author")
+                    let author = document.get("author") as! String
                     let cr_date = document.get("cr_date") as! Timestamp
                     let date : Date = cr_date.dateValue()
-                    let speaker = document.get("speaker")
-                    let description = document.get("description")
+                    let speaker = document.get("speaker") as! String
+                    let questionString = document.get("question") as! String
+                    let question = Question(newSpeaker: speaker, newAuthor: author, newQuestion: questionString, newDate: date)
+                    self.questions += [question]
                     
                     print ("author: \(author)")
                     print ("cr_date: \(date)")
                     print ("speaker: \(speaker)")
-                    print ("description: \(description)")
+                    print ("description: \(questionString)")
                 }
             }
-            
+            self.tableView.reloadData()
         }
+        
 
         // Do any additional setup after loading the view.
     }

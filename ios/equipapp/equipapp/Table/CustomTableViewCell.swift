@@ -9,7 +9,11 @@
 import UIKit
 
 class CustomTableViewCell: UITableViewCell {
-
+    
+    
+ 
+    var cellDelegate: RecordingCellProtocol?
+    var index: Int?
     @IBOutlet var playButton: UIButton!
     @IBOutlet var dateOfRecording: UILabel!
     @IBOutlet var nameOfRecording: UILabel!
@@ -23,5 +27,10 @@ class CustomTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    @IBAction func playButtonSelected(_ sender: UIButton) {
+        // send button to playing of resource in delegate.
+        self.cellDelegate?.didTapCell(cell: self, index: index!)
+    }
+    
+    
 }
