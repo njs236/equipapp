@@ -10,5 +10,5 @@ import Foundation
 import UIKit
 
 protocol RecordingCellProtocol {
-    func didTapCell(cell: UITableViewCell, index: Int)
+    func didTapCell(cell: CustomTableViewCell, index: Int)
 }

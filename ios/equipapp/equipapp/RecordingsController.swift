@@ -14,12 +14,33 @@ import AVKit
 
 class RecordingsController: UIViewController, UITableViewDelegate, UITableViewDataSource, RecordingCellProtocol {
     var avPlayer: AVPlayer? = nil
-    func didTapCell(cell: UITableViewCell, index: Int) {
-        // play sound
+    var db : Firestore? = nil
+    var selectedIndex: Int? = -1
+    func didTapCell(cell: CustomTableViewCell, index: Int) {
+       // get cell.isSelected to determine if play or not.
+        
+        if (selectedIndex != -1) {
+            let indexPath = IndexPath.init(row: self.selectedIndex!, section: 0)
+            let prevcell = self.tableView.cellForRow(at: indexPath) as! CustomTableViewCell
+            prevcell.playButton.isSelected = false
+        }
+        //store the index of the played talk.
+        self.selectedIndex = index
+        //select recording that corresponds to the pressed button.
         let recording = recordings[index]
+        // select the url of the recording.
         let downloadUrl = recording.downloadURL
+        // initialize player
         self.avPlayer = AVPlayer(url: downloadUrl)
+        
+        //play talk
+        if (cell.playButton.isSelected) {
         self.avPlayer?.play()
+        } else {
+            self.avPlayer?.pause()
+            self.selectedIndex = -1
+        }
+        //Log the url of the talk.
         print("downloadUrl obtained and set: \(downloadUrl)")
     
     }
@@ -38,21 +59,40 @@ class RecordingsController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        db = Firestore.firestore()
+    
+    
+    
         
-        let db = Firestore.firestore()
+        //Use firebase storage to get recording and play.
+
+        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
         recordings.removeAll()
-        db.collection("recordings").getDocuments() { (querySnapshot, err) in
+        db!.collection("recordings").order(by:"date", descending: true).order(by:"url", descending: true).getDocuments() { (querySnapshot, err) in
             
             if let err = err {
                 print("Error in downloading: \(err)")
             } else {
                 //succesful download
                 for document in querySnapshot!.documents {
-                    let url = document.get("downloadURL") as! String
+                    let url = document.get("url") as! String
                     let timestamp = document.get("date") as! Timestamp
                     let date = timestamp.dateValue()
-                    let name = document.get("name") as! String
-                    let recording = Recording(newRecordingName: name, newDate: date, url: url)
+                    var name = ""
+                    if (document.get("name") != nil) {
+                        name = document.get("name") as! String
+                    }
+                    var speaker = ""
+                    if (document.get("speaker") != nil) {
+                        speaker = document.get("speaker") as! String
+                    }
+                    let recording = Recording(newRecordingName: name, newDate: date, url: url, newSpeaker: speaker)
                     recording.createDate()
                     self.recordings += [recording]
                     
@@ -64,13 +104,7 @@ class RecordingsController: UIViewController, UITableViewDelegate, UITableViewDa
             self.tableView.reloadData()
             
         }
-    
-    
-    
         
-        //Use firebase storage to get recording and play.
-
-        // Do any additional setup after loading the view.
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,6 +115,7 @@ class RecordingsController: UIViewController, UITableViewDelegate, UITableViewDa
         //TODO. get data of recordings
         cell.nameOfRecording.text = data.recordingName
         cell.dateOfRecording.text = data.dateStringForTable
+        cell.speakerOfRecording.text = data.speaker
         cell.index = indexPath.row
         cell.cellDelegate = self
         

@@ -1,6 +1,0 @@
-module KDEAudioPlayer {
-  umbrella header "KDEAudioPlayer-umbrella.h"
-
-  export *
-  module * { export * }
-}

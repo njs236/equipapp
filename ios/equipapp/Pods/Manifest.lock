@@ -59,6 +59,7 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FontAwesome.swift (1.4.6)
   - GoogleAppMeasurement (5.4.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -107,7 +108,6 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.14.0)
   - GTMSessionFetcher/Core (1.2.1)
-  - KDEAudioPlayer (1.1.0)
   - leveldb-library (1.20)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -121,9 +121,9 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Firestore
   - Firebase/Storage
+  - FontAwesome.swift
   - GoogleMaps
   - GooglePlaces
-  - KDEAudioPlayer
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -136,6 +136,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseStorage
+    - FontAwesome.swift
     - GoogleAppMeasurement
     - GoogleMaps
     - GooglePlaces
@@ -143,7 +144,6 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
-    - KDEAudioPlayer
     - leveldb-library
     - nanopb
     - Protobuf
@@ -158,6 +158,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 0b2495ff27e5749fa0984c405ea58db3d070e075
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseStorage: 3d22c041370593e639fba013d1eb698a8dae2881
+  FontAwesome.swift: 18fb500c0decc2bbfadf2ae16a936704ec2c49bd
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
@@ -165,11 +166,10 @@ SPEC CHECKSUMS:
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
-  KDEAudioPlayer: b3787f02b6718c2416589a7726f2633cde2cd60e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
 
-PODFILE CHECKSUM: 4496f549d8c31387bc2305b820698f71c0bcad6b
+PODFILE CHECKSUM: baa76aec6b7711fc4b3ece15166428a7967227e4
 
 COCOAPODS: 1.5.3

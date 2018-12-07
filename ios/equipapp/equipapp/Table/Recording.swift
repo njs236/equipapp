@@ -14,12 +14,14 @@ class Recording: NSObject {
     var date: Date
     var dateStringForTable: String = ""
     var downloadURL: URL
-    init(newRecordingName: String, newDate: Date, url: String) {
+    var speaker: String
+    init(newRecordingName: String, newDate: Date, url: String, newSpeaker: String) {
       
         self.recordingName = newRecordingName
         self.date = newDate
         let urlObject = URL(string: url)
         self.downloadURL = urlObject!
+        self.speaker = newSpeaker
         
     }
     

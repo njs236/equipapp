@@ -6,5 +6,5 @@ target 'equipapp' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
-  pod 'KDEAudioPlayer'
+  pod 'FontAwesome.swift'
 end
