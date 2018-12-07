@@ -14,6 +14,9 @@ import android.widget.Toast
 //import jdk.nashorn.internal.runtime.ECMAException.getException
 //import org.junit.experimental.results.ResultMatchers.isSuccessful
 import com.nathan.equipapp.R
+import com.joanzapata.iconify.fonts.FontAwesomeIcons
+import com.joanzapata.iconify.IconDrawable
+import com.nathan.equipapp.MyApplication
 
 
 class MainActivity : AppCompatActivity(), DetailsFragment.OnFragmentInteractionListener,
@@ -21,7 +24,8 @@ class MainActivity : AppCompatActivity(), DetailsFragment.OnFragmentInteractionL
     QuestionFragment.OnFragmentInteractionListener,
     TalkFragment.OnFragmentInteractionListener,
 NotificationFragment.OnFragmentInteractionListener,
-QuestionReceiverFragment.OnFragmentInteractionListener{
+QuestionReceiverFragment.OnFragmentInteractionListener,
+MoreFragment.OnFragmentInteractionListener{
     var fragmentManager = supportFragmentManager
     val TAG = this.javaClass.simpleName
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -58,6 +62,14 @@ QuestionReceiverFragment.OnFragmentInteractionListener{
                 item.setChecked(true)
                 return@OnNavigationItemSelectedListener true
             }
+            /*R.id.navigation_more -> {
+                //
+                val fragment=MoreFragment()
+                Log.d(TAG, "more selected")
+                changeView(fragment)
+                item.setChecked(true)
+                return@OnNavigationItemSelectedListener true
+            }
             R.id.navigation_question_receiver ->{
                 val fragment = QuestionReceiverFragment()
                 Log.d(TAG, "question displayer selected")
@@ -67,7 +79,7 @@ QuestionReceiverFragment.OnFragmentInteractionListener{
 
 
             }
-            /*
+
             R.id.noti_sender ->{
                 val fragment = NotificationFragment()
                 Log.d(TAG, "Notification selected")
@@ -77,17 +89,23 @@ QuestionReceiverFragment.OnFragmentInteractionListener{
 
 
             }
-*/
 
+*/
         }
         false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MyApplication.currentActivity = this
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_main)
         setUpView()
+        findViewById<BottomNavigationView>(R.id.navigation).menu.findItem(R.id.navigation_more).setIcon(
+            IconDrawable(this, FontAwesomeIcons.fa_bars)
+                .colorRes(R.color.black)
+                .actionBarSize()
+        )
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         val currentUser = mAuth.currentUser
@@ -181,5 +199,8 @@ QuestionReceiverFragment.OnFragmentInteractionListener{
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun onMoreInteraction(uri: Uri) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }

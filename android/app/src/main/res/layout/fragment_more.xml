@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".ui.MoreFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:id="@+id/rl_questions" android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="8dp" android:background="@android:drawable/divider_horizontal_dark"
+        android:clickable="true"
+                        android:focusable="true">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:text="@string/title_questions"
+                      android:textSize="20sp"
+                      android:clickable="false"
+                      android:id="@+id/tv_questions" android:layout_alignParentStart="true"
+                      tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp"
+                      android:layout_marginStart="1dp"/>
+            <com.joanzapata.iconify.widget.IconTextView
+                    android:layout_width="22dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/fa_chevron_right"
+                    android:clickable="false"
+                    android:textColor="@color/black"
+                    android:id="@+id/fa_questions_button" android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="0dp"/>
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/rl_send_noti"
+                        app:layout_constraintTop_toBottomOf="@+id/rl_questions"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="8dp" android:background="@android:drawable/divider_horizontal_dark"
+        android:clickable="true"
+        android:focusable="true">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:text="@string/title_send_notification"
+                      android:textSize="20sp"
+                      android:clickable="false"
+                      android:id="@+id/tv_send_noti" android:layout_alignParentStart="true"
+                      android:layout_marginStart="0dp"/>
+            <com.joanzapata.iconify.widget.IconTextView
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/fa_chevron_right"
+                    android:textColor="@color/black"
+                    android:clickable="false"
+                    android:id="@+id/fa_send_noti_button" android:layout_gravity="end"
+                    android:layout_alignParentEnd="true" android:layout_marginEnd="0dp"/>
+        </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

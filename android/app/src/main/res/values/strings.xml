@@ -20,4 +20,6 @@
     <string name="hint_noti_name">Enter the name of the notification</string>
     <string name="hint_noti_time">Enter the time of the event</string>
     <string name="hint_noti_date">Enter the date of the event</string>
+    <string name="title_more">More</string>
+    <string name="fa_chevron_right">{fa-chevron-right}</string>
 </resources>
