@@ -22,4 +22,21 @@
     <string name="hint_noti_date">Enter the date of the event</string>
     <string name="title_more">More</string>
     <string name="fa_chevron_right">{fa-chevron-right}</string>
+    <string name="row_recording_play">Play</string>
+    <string name="row_recording_date">Date</string>
+    <string name="row_recording_name">RecordingName</string>
+    <string name="row_recording_speaker">Speaker</string>
+    <string name="fa_play_circle">\uf144</string>
+    <string name="fa_stop_circle">\uf28d</string>
+    <string name="notification_content_title">Equip Conference</string>
+    <string name="channel_name">Equip Conference</string>
+    <string name="channel_description">Letting you know what is happening while you are at the conference!</string>
+    <string name="check_internet">Internet connection lost. Try reconnecting</string>
+    <string name="speaker1_info">Speaker1 Info</string>
+    <string name="speaker2_info">Speaker2 Info</string>
+    <string name="paul_dale_photo">Paul Dale photo</string>
+    <string name="dave_clancey_photo">Dave Clancey photo</string>
+    <string name="details_register_south">Equip South Island</string>
+    <string name="details_register_north">Equip North Island</string>
+    <string name="register">REGISTER</string>
 </resources>

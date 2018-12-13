@@ -13,12 +13,10 @@
                       android:orientation="vertical">
             <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+            android:id="@+id/tbl_talk_layout">
 
-                <TableRow android:layout_width="match_parent" android:layout_height="match_parent"/>
-                <TableRow android:layout_width="match_parent" android:layout_height="match_parent"/>
-                <TableRow android:layout_width="match_parent" android:layout_height="match_parent"/>
-                <TableRow android:layout_width="match_parent" android:layout_height="match_parent"/>
+
             </TableLayout>
         </LinearLayout>
     </ScrollView>
