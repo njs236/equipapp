@@ -13,6 +13,6 @@ public class DeveloperKey {
    * <a href="https://console.developers.google.com/">Google Developers Console</a>
    * to register a new developer key.
    */
-  public static final String DEVELOPER_KEY = "AIzaSyBSS_jwWcgFccwEBaFcOCJVXA_llPw8pD8";
+  public static final String DEVELOPER_KEY = "AIzaSyDQOtd1eHs30wdJJyPwAD-1abMyaKdXSCQ ";
 
 }
