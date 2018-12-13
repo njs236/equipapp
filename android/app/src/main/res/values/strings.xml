@@ -41,4 +41,6 @@
     <string name="register">REGISTER</string>
     <string name="prev_recordings">Go Back</string>
     <string name="next_recordings">Go Forward</string>
+    <string name="valid_speaker">Please enter a valid speaker name</string>
+    <string name="nonempty_question">Please enter a question</string>
 </resources>
