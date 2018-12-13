@@ -19,6 +19,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.joanzapata.iconify.IconDrawable
@@ -64,7 +65,14 @@ class TalkFragment : Fragment() {
     private var selectedIndex: Int = -1
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var mMediaBrowser: MediaBrowserCompat
+    private var recordingSize : Int? = -1
     private var SELECTED_INDEX = "talk_selected_index"
+    private var ll_talk_more : LinearLayout? = null
+    private var btn_next: Button? = null
+    private var btn_prev: Button? = null
+    private var nextSnapshot: DocumentSnapshot? = null
+    private var selectedPage: Int? = -1
+    private var prevSnapshot: DocumentSnapshot? = null
 
 
     var db = FirebaseFirestore.getInstance()
@@ -150,6 +158,23 @@ class TalkFragment : Fragment() {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_talk, container, false)
         tbl_talk_layout = view.findViewById(R.id.tbl_talk_layout)
+        ll_talk_more = view.findViewById(R.id.ll_talk_more)
+        btn_next = view.findViewById(R.id.btn_talk_next)
+        btn_prev = view.findViewById(R.id.btn_talk_prev)
+        // give the buttons paginate functions
+        btn_next?.setOnClickListener { view->
+            // increment page you want to navigate to
+            var page = selectedPage?.plus(1)
+            // ask to get data for that page. direction true means right.
+            getRecordingData( page!!, true)
+
+        }
+        btn_prev?.setOnClickListener { view->
+            // decrement page you want to navigate to
+            var page = selectedPage?.minus(1)
+            // ask to get data for that page. direction false means left.
+            getRecordingData( page!!, false)
+        }
         inflateTableLayout()
 
         return view
@@ -204,8 +229,9 @@ class TalkFragment : Fragment() {
      }
 
     fun inflateTableLayout() {
-        getRecordingData()
         tbl_talk_layout?.isStretchAllColumns = true
+        retrieveRecordings()
+
 
 
     }
@@ -223,12 +249,52 @@ class TalkFragment : Fragment() {
          playSound(row, index)
 
     }
+/*
+Retrieve the recordings. run this whenever you want to retrieve the whole list of recordings.
+Parent function to retrieving data recursively.
+ */
+    fun retrieveRecordings() {
+    this.recordings.clear()
+    getRecordingsSize()
+    getRecordingData(null, null)
 
-    fun getRecordingData() {
+
+}
+
+    fun getRecordingsSize() {
+
+        var recordingsCollection = db.collection("recordings")
+        recordingsCollection.get().addOnSuccessListener { snap ->
+            recordingSize = snap.size()
+
+        }
+    }
+
+    /*
+retrives a page of data from recordings database
+and presents it to the tablelayout.
+if count is not null then it means you are wanting to fetch a page of data
+if direction is not null then it means you are wanting to navigate to a page
+
+
+ */
+    fun getRecordingData(count: Int?, direction: Boolean?) {
         this.recordings.clear()
+        // open recordings collection
         var recordingsCollection = db.collection("recordings")
 
-        recordingsCollection.orderBy("date", Query.Direction.DESCENDING).orderBy("speaker").orderBy("url", Query.Direction.DESCENDING).get().addOnSuccessListener { result ->
+
+            //otherwise, query with limit of 25 and ordered by recording data properties
+          var  query = recordingsCollection
+                .orderBy("date", Query.Direction.DESCENDING)
+                .orderBy("speaker")
+                .orderBy("url", Query.Direction.DESCENDING)
+
+
+
+        //start query
+        query.get().addOnSuccessListener { result ->
+            // retrieve documents
             for (document in result) {
                 val question = document.get("question")
                 //optional author
@@ -249,11 +315,16 @@ class TalkFragment : Fragment() {
                 Log.d(TAG, "speaker: $speaker")
 
                 Log.d(TAG, "url: $url")*/
-
+                // add to recordings for table.
                 this.recordings.add(Recording(speaker, name, date!!, url))
                 //TODO: writing a mutable list that holds the data needed for the table
             }
-            fillTable()
+                // load table with data
+                fillTable()
+
+            // if there are more records than one page
+
+
 
         }.addOnFailureListener { exception ->
             Log.d(TAG, "Error getting documents: ", exception)

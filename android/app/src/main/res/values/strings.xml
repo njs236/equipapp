@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Equipapp</string>
+    <string name="app_name">Equip Conference</string>
     <string name="title_map">Map</string>
     <string name="title_details">Details</string>
     <string name="title_talks">Talks</string>
@@ -39,4 +39,6 @@
     <string name="details_register_south">Equip South Island</string>
     <string name="details_register_north">Equip North Island</string>
     <string name="register">REGISTER</string>
+    <string name="prev_recordings">Go Back</string>
+    <string name="next_recordings">Go Forward</string>
 </resources>

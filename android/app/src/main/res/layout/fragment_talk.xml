@@ -18,6 +18,31 @@
 
 
             </TableLayout>
+            <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/ll_talk_more"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+            android:weightSum="2">
+                <Button
+                        android:padding="20dp"
+                        android:id="@+id/btn_talk_prev"
+                        android:visibility="invisible"
+                        android:text="@string/prev_recordings"
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+                <Button
+                        android:padding="20dp"
+                        android:id="@+id/btn_talk_next"
+                        android:visibility="invisible"
+                        android:text="@string/next_recordings"
+                        android:layout_width="match_parent"
+                        android:textAlignment="center"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

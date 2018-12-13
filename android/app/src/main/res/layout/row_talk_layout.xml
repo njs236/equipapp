@@ -4,11 +4,12 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:id="@+id/row_talk"
-
+android:paddingBottom="20dp"
           android:background="@drawable/border"
 >
 
     <RelativeLayout
+            android:paddingBottom="20dp"
             android:id="@+id/rl_talk_contents"
             android:orientation="horizontal"
             android:layout_width="match_parent"

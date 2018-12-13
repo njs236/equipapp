@@ -3,34 +3,46 @@
           xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:id="@+id/row_question"
+          android:paddingBottom="20dp"
+          android:paddingStart="0dp"
+          android:paddingEnd="20dp"
           android:background="@drawable/border">
 
     <LinearLayout android:orientation="vertical"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:paddingBottom="20dp">
 
 
         <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="24dp" android:id="@+id/row_question_speaker"
+                android:layout_height="24dp"
+                android:id="@+id/row_question_speaker"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"/>
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical" android:layout_marginEnd="16dp">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
             <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/row_question_description"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/row_question_description"
                     app:layout_constraintTop_toBottomOf="@+id/row_question_speaker"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="32dp"
                     android:textSize="12sp"/>
         </LinearLayout>
         <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="25dp" android:id="@+id/row_question_author"
-                app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/row_question_description"/>
+                android:layout_height="25dp"
+                android:id="@+id/row_question_author"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/row_question_description"/>
 
     </LinearLayout>
 </TableRow>
