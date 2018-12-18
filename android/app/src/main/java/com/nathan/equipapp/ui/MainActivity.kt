@@ -159,7 +159,7 @@ MoreFragment.OnFragmentInteractionListener{
             R.id.navigation_talks -> frag = TalkFragment()
             R.id.navigation_question -> frag = QuestionFragment()
             R.id.navigation_details-> frag = DetailsFragment()
-            R.id.navigation_question_receiver -> frag = QuestionReceiverFragment()
+            //R.id.navigation_question_receiver -> frag = QuestionReceiverFragment()
         }
 
         mSelectedItem = item.itemId
