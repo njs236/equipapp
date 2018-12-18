@@ -1,13 +1,21 @@
 package com.nathan.equipapp.ui
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.Button
+import android.widget.TextView
+import com.google.android.youtube.player.*
 import com.nathan.equipapp.R
+import com.nathan.equipapp.Utils.DeveloperKey
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +37,18 @@ class DetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var videoUrl = "vQ2x4R9r7QA"
+    private var registerUrl = "http://www.equipconference.org.nz/registration-1-1/"
+    private var northRegisterUrl = "http://www.equipconference.org.nz/registration-1/"
+    private var count = 0
+    private var tv_speaker1: TextView? = null
+    private var tv_speaker2: TextView? = null
+    private var youtube_viewer: YouTubePlayerSupportFragment? = null
+    private var youtube_player: YouTubePlayer? = null
+    private var register_south: Button? = null
+    private var register_north: Button? = null
+    private var details_title: TextView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +56,58 @@ class DetailsFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
+    }
+
+    fun readTableData(): ArrayList<String> {
+        count = 0
+        var fileIn = context?.assets?.open("speaker_info.txt")
+        var reader = InputStreamReader(fileIn)
+        var speakerlist = ArrayList<String>()
+        var inputString = BufferedReader(reader).useLines { lines->
+            val results = StringBuilder()
+            lines.forEach { speakerlist.add(it)}
+            results.toString()
+        }
+        return speakerlist
+
+
+
+
+    }
+    fun writeSpeakerText() {
+        val array = readTableData()
+        val speakerText = ArrayList<String>()
+        // split array down "lines"
+        for (speaker in array) {
+            val newArray = speaker.split("/")
+            var newText = ""
+            for (word in newArray) {
+                newText += "$word \n"
+            }
+            speakerText.add(newText)
+
+        }
+
+        tv_speaker1?.text = speakerText[0]
+        tv_speaker2?.text = speakerText[1]
+    }
+
+    val youtubeOnInitializedListener = YoutubeOnInitializedListener()
+
+    inner class YoutubeOnInitializedListener : YouTubePlayer.OnInitializedListener {
+        override fun onInitializationFailure(p0: YouTubePlayer.Provider?, p1: YouTubeInitializationResult?) {
+
+        }
+
+        override fun onInitializationSuccess(p0: YouTubePlayer.Provider?, p1: YouTubePlayer?, p2: Boolean) {
+            youtube_player = p1
+            p1?.cueVideo(videoUrl)
+            p1?.play()
+        }
+
+
     }
 
     override fun onCreateView(
@@ -43,8 +115,39 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false)
+       var view = inflater.inflate(R.layout.fragment_details, container, false)
+        details_title = view.findViewById(R.id.details_title)
+        details_title?.setTextColor(resources.getColor(R.color.white))
+        tv_speaker1 = view.findViewById(R.id.tv_details_speaker1)
+        tv_speaker2 = view.findViewById(R.id.tv_details_speaker2)
+        register_north = view.findViewById(R.id.btn_details_register_north)
+        register_north?.setOnClickListener { view->
+
+            val i = Intent(Intent.ACTION_VIEW)
+            i.setData(Uri.parse(northRegisterUrl))
+            startActivity(i)
+        }
+        register_south = view.findViewById(R.id.btn_details_register)
+        register_south?.setOnClickListener { view->
+
+            val i = Intent(Intent.ACTION_VIEW)
+            i.setData(Uri.parse(registerUrl))
+            startActivity(i)
+        }
+
+        writeSpeakerText()
+        return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        youtube_viewer = YouTubePlayerSupportFragment()
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.playerView_details, youtube_viewer as Fragment).commit()
+        youtube_viewer!!.initialize(DeveloperKey.DEVELOPER_KEY, youtubeOnInitializedListener)
+
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {

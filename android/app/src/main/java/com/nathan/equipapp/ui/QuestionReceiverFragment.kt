@@ -7,8 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
+import android.widget.TextView
+import android.widget.ToggleButton
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.nathan.equipapp.MyApplication
 import com.nathan.equipapp.R
+import com.nathan.equipapp.assets.Question
+import java.sql.Timestamp
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +40,8 @@ class QuestionReceiverFragment: Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var questions = ArrayList<Question>()
+    private lateinit var tbl_questions_layout: TableLayout
     private val TAG = this.javaClass.simpleName
 
     var db = FirebaseFirestore.getInstance()
@@ -43,26 +53,6 @@ class QuestionReceiverFragment: Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-        }
-
-        var questions = db.collection("questions")
-
-        questions.get().addOnSuccessListener { result ->
-            for (document in result) {
-                val question = document.get("question")
-                //optional author
-                val author = document.get("author")
-                val speaker = document.get("speaker")
-                val cr_date = document.get("cr_date")
-                Log.d(TAG, "author: $author")
-                Log.d(TAG, "speaker: $speaker")
-                Log.d(TAG, "cr_date: $cr_date")
-                Log.d(TAG, "question: $question")
-
-                //TODO: writing a mutable list that holds the data needed for the table
-            }
-        }.addOnFailureListener { exception ->
-            Log.d(TAG, "Error getting documents: ", exception)
         }
 
 
@@ -78,12 +68,73 @@ class QuestionReceiverFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragments_questions, container, false)
+        val view = inflater.inflate(R.layout.fragments_questions, container, false)
+
+        tbl_questions_layout = view.findViewById(R.id.tbl_questions_layout)
+        inflateTableLayout()
+
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onQuestionsInteraction(uri)
+    }
+
+    private fun getQuestionsData() {
+
+        var questionsCollection = db.collection("questions")
+
+        questionsCollection.orderBy("cr_date", Query.Direction.DESCENDING).get().addOnSuccessListener { result ->
+            for (document in result) {
+                val question = document.get("question")
+                //optional author
+                val author = document.get("author") as String
+                val speaker = document.get("speaker") as String
+                val timestamp = document.getTimestamp("cr_date")
+                val description = document.get("question") as String
+                val date = timestamp?.toDate()
+
+                Log.d(TAG, "author: $author")
+                Log.d(TAG, "speaker: $speaker")
+                Log.d(TAG, "cr_date: ${date.toString()}")
+                Log.d(TAG, "question: $question")
+
+                questions.add(Question(speaker, author, description, date!!))
+                //TODO: writing a mutable list that holds the data needed for the table
+            }
+            fillTable()
+        }.addOnFailureListener { exception ->
+            Log.d(TAG, "Error getting documents: ", exception)
+        }
+
+
+    }
+
+    fun inflateTableLayout() {
+        getQuestionsData()
+        tbl_questions_layout?.isStretchAllColumns = true
+
+
+    }
+
+    private fun fillTable() {
+        var lp = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT)
+        lp.setMargins(10,10,10,10)
+
+        questions.forEach { question ->
+            val row = View.inflate(MyApplication.currentActivity, R.layout.row_question_layout, null)
+            val speaker = row.findViewById<TextView>(R.id.row_question_speaker)
+            val description = row.findViewById<TextView>(R.id.row_question_description)
+            val author = row.findViewById<TextView>(R.id.row_question_author)
+            speaker.text = question.speaker
+            description.text = question.description
+            author.text = question.author
+            row.layoutParams = lp
+            tbl_questions_layout?.addView(row, lp)
+
+
+        }
     }
 
     override fun onAttach(context: Context) {

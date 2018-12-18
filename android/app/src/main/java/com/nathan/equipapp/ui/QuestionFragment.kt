@@ -4,10 +4,16 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import com.google.firebase.firestore.FirebaseFirestore
 import com.nathan.equipapp.R
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +35,13 @@ class QuestionFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var editTextName: EditText? = null
+    private var editTextQuestion: EditText? = null
+    private var editTextSpeaker: EditText? = null
+    private var buttonSend: Button? = null
+    private var db: FirebaseFirestore? = null
+    private var TAG = this.javaClass.simpleName
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +49,8 @@ class QuestionFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        db = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(
@@ -43,7 +58,51 @@ class QuestionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_question, container, false)
+        val view = inflater.inflate(R.layout.fragment_question, container, false)
+        editTextName = view.findViewById(R.id.editTextName)
+        editTextQuestion = view.findViewById(R.id.editTextQuestion)
+        editTextSpeaker = view.findViewById(R.id.editTextSpeaker)
+        buttonSend = view.findViewById<Button>(R.id.buttonSend)
+
+        buttonSend?.setOnClickListener { v: View? ->
+            val author = editTextName!!.text.toString()
+            val speaker = editTextSpeaker!!.text.toString()
+            val question = editTextQuestion!!.text.toString()
+            val data = HashMap<String, Any>()
+            data["author"] = author
+            data["question"] = question
+            data["speaker"] = speaker
+
+
+            var date = Calendar.getInstance().time
+
+            data["cr_date"] = date
+
+
+            if (speaker == "") {
+
+                Toast.makeText(context, getString(R.string.valid_speaker), Toast.LENGTH_LONG).show()
+            } else if (question == "") {
+                Toast.makeText(context, getString(R.string.nonempty_question), Toast.LENGTH_LONG).show()
+
+            } else {
+                db?.collection("questions")?.add(data)?.addOnSuccessListener { ref ->
+
+                    Log.d(TAG, "created Document: ${ref.id}")
+                }?.addOnFailureListener { e ->
+
+                    Log.w(TAG, "Error adding document: $e")
+
+                }
+            }
+
+            editTextName?.text?.clear()
+            editTextQuestion?.text?.clear()
+            editTextSpeaker?.text?.clear()
+
+
+        }
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
