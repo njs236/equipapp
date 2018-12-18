@@ -16,6 +16,11 @@ class ConferenceDetailsController: UIViewController {
     @IBOutlet var putWebView: UIView!
     var webView: WKWebView!
     
+    @IBOutlet var Speaker1Info: UILabel!
+    @IBOutlet var Speaker2Info: UILabel!
+    @IBOutlet var Speaker1Image: UIImageView!
+    @IBOutlet var Speaker2Image: UIImageView!
+    @IBOutlet var EquipSouthBtn: UIButton!
     override func loadView() {
         super.loadView()
         let config = WKWebViewConfiguration()

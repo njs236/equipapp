@@ -74,7 +74,7 @@ class RecordingsController: UIViewController, UITableViewDelegate, UITableViewDa
         
         
         recordings.removeAll()
-        db!.collection("recordings").order(by:"date", descending: true).order(by:"url", descending: true).getDocuments() { (querySnapshot, err) in
+        db!.collection("recordings").order(by:"date", descending: true).order(by: "speaker").order(by:"url", descending: true).getDocuments() { (querySnapshot, err) in
             
             if let err = err {
                 print("Error in downloading: \(err)")

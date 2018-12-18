@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF47816121C062560049FDEC /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF47816021C062560049FDEC /* PushKit.framework */; };
+		DF47816321C063070049FDEC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF47816221C063060049FDEC /* UserNotifications.framework */; };
+		DF47816621C066800049FDEC /* EventNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF47816521C066800049FDEC /* EventNotification.swift */; };
 		DF48EACA21A5F89B00C5FE4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EAC921A5F89B00C5FE4E /* AppDelegate.swift */; };
 		DF48EACC21A5F89B00C5FE4E /* ConferenceDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EACB21A5F89B00C5FE4E /* ConferenceDetailsController.swift */; };
 		DF48EACE21A5F89C00C5FE4E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF48EACD21A5F89C00C5FE4E /* MapViewController.swift */; };
@@ -52,6 +55,9 @@
 /* Begin PBXFileReference section */
 		1CFE0AC781AD6F32C0E00128 /* libPods-equipapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-equipapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84DC523F78D2588CD34C2B10 /* Pods-equipapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-equipapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-equipapp/Pods-equipapp.debug.xcconfig"; sourceTree = "<group>"; };
+		DF47816021C062560049FDEC /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
+		DF47816221C063060049FDEC /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		DF47816521C066800049FDEC /* EventNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventNotification.swift; sourceTree = "<group>"; };
 		DF48EAC621A5F89B00C5FE4E /* equipapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = equipapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF48EAC921A5F89B00C5FE4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF48EACB21A5F89B00C5FE4E /* ConferenceDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConferenceDetailsController.swift; sourceTree = "<group>"; };
@@ -88,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF47816321C063070049FDEC /* UserNotifications.framework in Frameworks */,
+				DF47816121C062560049FDEC /* PushKit.framework in Frameworks */,
 				DF4C4DCA21B7676F00DE93D1 /* AVKit.framework in Frameworks */,
 				DF4C4DC821B7676800DE93D1 /* AVFoundation.framework in Frameworks */,
 				DF7136B721B4CC52000B9C01 /* WebKit.framework in Frameworks */,
@@ -124,12 +132,22 @@
 		C0BDE403DDFD095930EDEE38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF47816221C063060049FDEC /* UserNotifications.framework */,
+				DF47816021C062560049FDEC /* PushKit.framework */,
 				DF4C4DC921B7676F00DE93D1 /* AVKit.framework */,
 				DF4C4DC721B7676800DE93D1 /* AVFoundation.framework */,
 				DF7136B621B4CC52000B9C01 /* WebKit.framework */,
 				1CFE0AC781AD6F32C0E00128 /* libPods-equipapp.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DF47816421C0664F0049FDEC /* UserNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				DF47816521C066800049FDEC /* EventNotification.swift */,
+			);
+			name = UserNotifications;
 			sourceTree = "<group>";
 		};
 		DF48EABD21A5F89B00C5FE4E = {
@@ -157,6 +175,7 @@
 		DF48EAC821A5F89B00C5FE4E /* equipapp */ = {
 			isa = PBXGroup;
 			children = (
+				DF47816421C0664F0049FDEC /* UserNotifications */,
 				DF4C4DCD21B7802B00DE93D1 /* AudioPlayer */,
 				DF9C95FA21B6139F00D8513F /* GoogleService-Info.plist */,
 				DF9C95F721B6035700D8513F /* Table */,
@@ -414,6 +433,7 @@
 				DF48EAFC21A5FCBB00C5FE4E /* QuestionViewController.swift in Sources */,
 				DF4C4DCF21B7804E00DE93D1 /* PlayerView.swift in Sources */,
 				DF4C4DC421B7513100DE93D1 /* Question.swift in Sources */,
+				DF47816621C066800049FDEC /* EventNotification.swift in Sources */,
 				DF48EAFA21A5FBDC00C5FE4E /* RecordingsController.swift in Sources */,
 				DF9C95F921B6038800D8513F /* QuestionTableViewCell.swift in Sources */,
 				DF48EACA21A5F89B00C5FE4E /* AppDelegate.swift in Sources */,
