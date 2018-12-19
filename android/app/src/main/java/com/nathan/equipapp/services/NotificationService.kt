@@ -6,6 +6,8 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.*
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
@@ -130,8 +132,10 @@ class NotificationService : Service() {
 
         Log.d(TAG, "sendNotification: message: $message")
 
+
         var mBuilder = NotificationCompat.Builder(context, CHANNEL_ID )
             .setSmallIcon(R.mipmap.ic_launcher)
+            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
             .setContentTitle(context.getString(R.string.notification_content_title))
             .setContentText(message)
             .setContentIntent(pendingIntent)
