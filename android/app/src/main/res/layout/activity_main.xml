@@ -7,15 +7,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.MainActivity">
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/app_toolbar"
+            android:elevation="4dp"
+            android:background="@color/white"
+            app:titleTextColor="@color/black"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+    </android.support.v7.widget.Toolbar>
 
     <FrameLayout
             android:id="@+id/fragment_layout"
             android:layout_width="match_parent"
-            android:layout_height="512dp"
+            android:layout_height="450dp"
             app:layout_constraintBottom_toTopOf="@+id/navigation"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/app_toolbar"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

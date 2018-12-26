@@ -8,12 +8,17 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.Ringtone
+import android.media.RingtoneManager
 import android.os.*
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.nathan.equipapp.MyApplication
@@ -31,10 +36,12 @@ class NotificationService : Service() {
 
     private var db = FirebaseFirestore.getInstance()
     private var notis = ArrayList<Notification>()
+    private var instantNotis = ArrayList<Notification>()
     private var TAG = this.javaClass.simpleName
     var waitingTimer: Thread? = null
     var mode: Int? = -1
     private val mBinder = LocalBinder()
+
 
     inner class LocalBinder: Binder() {
         fun getService(): NotificationService = this@NotificationService
@@ -62,6 +69,7 @@ class NotificationService : Service() {
         if (WebInterface.isOnline(MyApplication.currentActivity)) {
 
             checkDB()
+            deleteLateNotifications()
 
 
         } else {
@@ -84,7 +92,7 @@ class NotificationService : Service() {
 
                 while (true) {
                     try {
-                        Thread.sleep(30000)
+                        Thread.sleep(10000)
                         handler.sendEmptyMessage(0)
 
 
@@ -99,21 +107,108 @@ class NotificationService : Service() {
 
     }
 
-    private fun checkForOccuringNotification() {
-        for (notification in notis) {
-            val delayInMillis = notification.delay *1000
+    private fun sendInstantNotification() {
+        val user = FirebaseAuth.getInstance().currentUser
+        // pre-conditions: instantNotis contains a notification.
+        for (notification in instantNotis) {
+            //Log.d(TAG, "notificationID: ${notification.id}")
+            //Log.d(TAG, "userId: ${user!!.uid}")
+            db.collection(user!!.uid).document(notification.id!!).get().addOnSuccessListener { documentSnapshot ->
 
+                if (documentSnapshot.data != null) {
+
+                }else {
+                    val data = HashMap<String, Any>()
+                    // add data from notification of when it was sent and the valid time to send to clients.
+                    data["timeToDeath"] = notification.delay
+                    data["date"] = notification.date
+                    data["message"] = notification.description
+                    // update user collection with the id of the notification.
+                    db.collection(user.uid).document(notification.id!!).set(data).addOnSuccessListener {
+                        Log.d(TAG, "document created: ")
+                        // condition: if a user fetches a notification after the timeToDie, don't send. Only send notification within the time frame it was originally specified with.
+                        val delayInMillis = notification.delay * 1000
+                        var calendar= Calendar.getInstance()
+                        var time = calendar.time
+                        //add delay from time of notification.
+                        // the date object which corresponds to when event fires.
+                        var triggerTimeToDie = Date(notification.date.time + delayInMillis)
+                        // if there is still time on the clock for it to be sent
+                        if (time.before(triggerTimeToDie)) {
+
+                            // if at the specified time.
+                            // send Notification.
+                            sendNotification(MyApplication.currentActivity, notification.description)
+                        } else {
+                            Log.d(TAG, "this notification was sent after it is allowed to be retrieved by logged in user")
+
+
+
+                        }
+
+                    }.addOnFailureListener { error->
+                        Log.w(TAG, "Error writing document", error)
+
+                    }
+
+                }
+            }.addOnFailureListener { err ->
+
+                Log.w(TAG, "error retrieving document: $err")
+            }
+
+        }
+    }
+
+
+    private fun checkForOccuringNotification() {
+
+        for (notification in notis) {
+
+            // create timeObject of when the notification is being sent.
+                // get Delay in Milliseconds
+            val delayInMillis = notification.delay *1000
+            // create current Date/Time stamp.
             var calendar= Calendar.getInstance()
             var time = calendar.time
             //subtract delay from time of notification.
             // the date object which corresponds to when event fires.
             var triggerNotiTime = Date(notification.date.time - delayInMillis)
-            if (!time.after(triggerNotiTime) && !time.before(triggerNotiTime)) {
 
-                // if at the specified time.
-                // send Notification.
-                sendNotification(MyApplication.currentActivity, notification.description)
+            if (notification.repeat != null) {
+                val endTime = Date(notification.end!!.time - delayInMillis)
+                // determine that the time is the same but day is different and falls between the start and end date
+                if (time.after(triggerNotiTime) && time.before(endTime)) {
+                    calendar.time = triggerNotiTime
+
+                    calendar.set(Calendar.HOUR_OF_DAY, 0)
+                    calendar.set(Calendar.MINUTE, 0)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+
+                    var timeOfDayForNotificationInLong = triggerNotiTime.time - calendar.time.time
+                    calendar.time = time
+                    calendar.set(Calendar.HOUR_OF_DAY, 0)
+                    calendar.set(Calendar.MINUTE, 0)
+                    calendar.set(Calendar.SECOND, 0)
+                    calendar.set(Calendar.MILLISECOND, 0)
+                    var timeOfDayInLong = time.time - calendar.time.time
+
+                    if ((timeOfDayInLong - 5000) <= timeOfDayForNotificationInLong && timeOfDayForNotificationInLong < (timeOfDayInLong + 5000) ) {
+                        sendNotification(MyApplication.currentActivity, notification.description)
+                    }
+
+                }
+
+            } else {
+                // if at the specified time
+                if ((triggerNotiTime.time - 5000) <= time.time && time.time < (triggerNotiTime.time + 5000) ) {
+
+                    // send Notification.
+                    sendNotification(MyApplication.currentActivity, notification.description)
+                }
             }
+
         }
     }
 
@@ -134,11 +229,12 @@ class NotificationService : Service() {
 
 
         var mBuilder = NotificationCompat.Builder(context, CHANNEL_ID )
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.mipmap.ic_launcher_round)
             .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
             .setContentTitle(context.getString(R.string.notification_content_title))
             .setContentText(message)
             .setContentIntent(pendingIntent)
+            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
 
@@ -172,6 +268,32 @@ class NotificationService : Service() {
         }
     }
 
+    private fun deleteLateNotifications() {
+        db.collection("notis").whereEqualTo("now", true).get().addOnSuccessListener { result->
+            for (document in result) {
+                val timestamp = document.getTimestamp("date")
+                val date = timestamp?.toDate()
+                val delay = document.get("delay") as Long
+                val delayInMillis = delay *1000
+
+                var calendar= Calendar.getInstance()
+                var time = calendar.time
+                //add delay from time of notification.
+                // the date object which corresponds to when event fires.
+
+                var triggerTimeToDie = Date(date!!.time + delayInMillis)
+                // if there is still time on the clock for it to be sent
+                if (!time.before(triggerTimeToDie)) {
+                    db.collection("notis").document(document.id).delete().addOnSuccessListener { Log.d(TAG, "Document deleted successfully") }
+                        .addOnFailureListener { err->Log.w(TAG, "error deleting document", err) }
+                }
+
+            }
+        }.addOnFailureListener { err->
+            Log.w(TAG, "document collection error", err)
+        }
+    }
+
     private fun checkDB() {
         notis.clear()
         var collection = db.collection("notis")
@@ -182,12 +304,42 @@ class NotificationService : Service() {
                 val date = timestamp?.toDate()
                 val delay = document.get("delay") as Long
                 val description = document.get("description") as String
-                notis.add(Notification(date!!, delay, description))
+                var repeat: Boolean = false
+                var endTimestamp: Timestamp? = null
+                var end: Date? = null
+
+
+                if (document.get("now") != null) {
+                    // For debug. retrieve if the notification is to be sent immediately or wait for a certain time.
+                    val now = document.get("now") as Boolean
+                    Log.d(TAG, "now: $now")
+
+                    instantNotis.add(Notification(date!!, delay, description, document.id))
+                    sendInstantNotification()
+                } else {
+                    //Log.d(TAG, "delayedNotification")
+                    // if the notification is repeating
+                   // Log.d(TAG, "is Repeated: ${document.get("repeat")}")
+                    if (document.get("repeats") != null) {
+                        repeat = document.get("repeats") as Boolean
+                        //Log.d(TAG, "repeat: $repeat")
+
+                        endTimestamp = document.getTimestamp("end")
+                        end = endTimestamp?.toDate()
+                        //Log.d(TAG, "end: $end")
+                        notis.add(Notification(date!!, delay, description, repeat, end!!))
+                    } else {
+                        notis.add(Notification(date!!, delay, description))
+                    }
+
+                    checkForOccuringNotification()
+                }
+
             }
-            if (false) {
-                checkForOccuringNotification()
-            }
-            sendNotification(MyApplication.currentActivity, notis[0].description)
+            //if (false) {
+
+            //}
+            //sendNotification(MyApplication.currentActivity, notis[0].description)
 
         }.addOnFailureListener {exception: Exception ->
             // report failure

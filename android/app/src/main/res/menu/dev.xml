@@ -1,0 +1,24 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item
+            android:id="@+id/navigation_talks"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="@string/title_talks"/>
+
+
+
+
+
+    <item android:id="@+id/navigation_question_receiver"
+                      android:icon="@drawable/ic_notifications_black_24dp"
+                      android:title="@string/title_questions"/>
+
+    <item android:id="@+id/navigation_notification"
+          android:icon="@drawable/ic_notifications_black_24dp"
+          android:title="@string/title_notifications"/>
+
+
+
+</menu>

@@ -10,9 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nathan.equipapp.R
+import kotlinx.android.synthetic.main.fragment_notis.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,6 +48,7 @@ class NotificationFragment: Fragment() {
     var dateField :EditText? = null
     var timeField :EditText?= null
     var sendButton: Button? = null
+    var notiCheck: CheckBox? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,22 +60,10 @@ class NotificationFragment: Fragment() {
 
         // form fills out and stores notifications.
 
-        sendButton?.setOnClickListener { result ->
-            //send to firebase
-            val data = HashMap<String, Any?>()
-            data["description"] = descriptionField?.text
-            val date = dateField?.text
-            val time = timeField?.text
-            // change date to local time.
-            val dateTime = "$date $time UTC+13"
-            data["date"] = dateTime
 
-            db.collection("questions").add(data).addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot written with ID:" + documentReference.id)
-            }.addOnFailureListener{e ->
-                Log.w(TAG, "Error adding document", e)
-            }
-        }
+
+
+
         //see the notification service for receiving notifications from firebase.
     }
 
@@ -82,6 +77,52 @@ class NotificationFragment: Fragment() {
         dateField = view.findViewById(R.id.notiDate)
         timeField = view.findViewById(R.id.notiTime)
         sendButton = view.findViewById(R.id.notiSend)
+        notiCheck = view.findViewById(R.id.noti_checkInstant)
+        notiCheck?.setOnCheckedChangeListener { buttonView, isChecked ->
+            Log.d(TAG, "isChecked: $isChecked")
+            if (isChecked) {
+                dateField!!.visibility  = View.INVISIBLE
+                timeField!!.visibility = View.INVISIBLE
+            } else {
+                dateField!!.visibility = View.VISIBLE
+                timeField!!.visibility = View.VISIBLE
+            }
+
+
+        }
+
+        sendButton?.setOnClickListener { result ->
+            //send to firebase
+            val data = HashMap<String, Any?>()
+            data["description"] = descriptionField?.text.toString()
+            if (noti_checkInstant.isChecked) {
+                val cal = Calendar.getInstance()
+                data["now"] = true
+                data["date"] = cal.time
+            } else {
+
+                val date = dateField?.text.toString()
+                val time = timeField?.text.toString()
+                Log.d(TAG, "date: $date")
+                Log.d(TAG, "time: $time")
+                // change date to local time.
+                val dateTime = "$date $time +1300"
+                Log.d(TAG, "dateTime: $dateTime")
+                val format = SimpleDateFormat("dd/MM/yyyy hh:mm Z", Locale.ENGLISH)
+
+                data["date"] = format.parse(dateTime)
+            }
+
+            data["delay"] = 300
+
+
+            db.collection("notis").add(data).addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot written with ID:" + documentReference.id)
+            }.addOnFailureListener{e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+
+        }
         return view
 
         // will be getting input names from this method.

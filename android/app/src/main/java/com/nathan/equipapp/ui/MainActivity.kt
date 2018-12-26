@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.telecom.Call
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.Window
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,7 +49,9 @@ MoreFragment.OnFragmentInteractionListener{
         super.onCreate(savedInstanceState)
         MyApplication.currentActivity = this
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.app_toolbar))
 
 
         val selectedItem: MenuItem
@@ -150,15 +154,28 @@ MoreFragment.OnFragmentInteractionListener{
         return
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater : MenuInflater = menuInflater
+        inflater.inflate(R.menu.dev, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        changeView(item)
+        return true
+    }
+
     //convenience functions for getting notis and questions.
 
-    fun changeView(item: MenuItem) {
+    fun changeView(item: MenuItem?) {
         var frag: Fragment? = null
-        when (item.itemId) {
+        when (item!!.itemId) {
             R.id.navigation_map -> frag = MapFragment()
             R.id.navigation_talks -> frag = TalkFragment()
             R.id.navigation_question -> frag = QuestionFragment()
             R.id.navigation_details-> frag = DetailsFragment()
+            R.id.navigation_notification -> frag = NotificationFragment()
+            R.id.navigation_question_receiver -> frag = QuestionReceiverFragment()
             //R.id.navigation_question_receiver -> frag = QuestionReceiverFragment()
         }
 
