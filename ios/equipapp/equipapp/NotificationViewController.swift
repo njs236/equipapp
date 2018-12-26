@@ -17,6 +17,18 @@ class NotificationViewController: UIViewController {
     
     var db: Firestore!
     
+    @IBOutlet var switchNotification: UISwitch!
+ 
+    @IBAction func switchNoti_changed(_ sender: Any) {
+        
+        print("switchNoti: \(switchNotification.isOn)")
+        if (switchNotification.isOn) {
+            datePickerEvent.isHidden = true
+        } else {
+            datePickerEvent.isHidden = false
+            
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,10 +53,25 @@ class NotificationViewController: UIViewController {
         // get data from field and send to firebase database
         
         var ref : DocumentReference? = nil
-        ref = db.collection("notis").addDocument(data: [
-            "date": datePickerEvent.date,
-            "description": eventNameTextField.text
-            ]) { err in
+        var date :Date? = nil
+        var docData: [String: Any]
+        
+        if (switchNotification.isOn) {
+            date = Date()
+            docData = ["date": date,
+                       "description": eventNameTextField.text,
+                       "now": true,
+                       "delay": 300]
+            
+        } else {
+            date = datePickerEvent.date
+            docData = ["date": date,
+                       "description": eventNameTextField.text,
+                       "delay": 300]
+            
+        }
+        
+        ref = db.collection("notis").addDocument(data: docData) { err in
             if let err = err {
                 print ("Error adding document: \(err)")
             } else {
