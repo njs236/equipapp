@@ -13,7 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.firestore.FirebaseFirestore
 import com.nathan.equipapp.R
 
 
@@ -54,13 +56,27 @@ class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnCameraMoveListen
     override fun onMapReady(googleMap: GoogleMap?) {
         Log.d(TAG, "map started")
         map = googleMap
-        val kaiapoiHighSchoolCoordinates = LatLng(-43.38791875701429,172.64559879899025)
-        val mainAuditorium = LatLng(-43.38747336005181,172.6455733180046)
-        val meetingArea = LatLng(-43.38833393810643,172.64617078006268)
-        val speaker = "Dave Clancey is speaking from 1 Samuel 22"
-        var marker = map?.addMarker(MarkerOptions().position(mainAuditorium).title("Main Auditorium"))
-        marker = map?.addMarker(MarkerOptions().position(meetingArea).title("Food and Fellowship"))
-        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(kaiapoiHighSchoolCoordinates, 19.1f))
+        val db = FirebaseFirestore.getInstance()
+        db.collection("maps").get().addOnSuccessListener { result ->
+            for (document in result) {
+                //position
+                //title
+                //center
+
+                if (document.get("center")!= null) {
+                    val position = document.getGeoPoint("position")
+                    val lat = position?.latitude
+                    val lng = position?.longitude
+                    map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat!!, lng!!), 19.1f))
+                } else {
+                    val position = document.getGeoPoint("position")
+                    val lat = position?.latitude
+                    val lng = position?.longitude
+                    val title = document.getString("title")
+                    map?.addMarker(MarkerOptions().position(LatLng(lat!!, lng!!)).title(title))
+                }
+            }
+        }
         map?.mapType = GoogleMap.MAP_TYPE_HYBRID
         map?.setOnCameraMoveListener(this)
         map?.setOnMapClickListener(this)

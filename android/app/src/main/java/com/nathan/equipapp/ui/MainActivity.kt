@@ -51,7 +51,7 @@ MoreFragment.OnFragmentInteractionListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.app_toolbar))
+        //setSupportActionBar(findViewById(R.id.app_toolbar))
 
 
         val selectedItem: MenuItem
@@ -161,11 +161,27 @@ MoreFragment.OnFragmentInteractionListener{
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        changeView(item)
+        subMenu(item)
         return true
     }
 
     //convenience functions for getting notis and questions.
+
+    fun subMenu(item: MenuItem?) {
+        var frag: Fragment? = null
+        when (item!!.itemId) {
+            R.id.dev_talks -> frag = TalkFragment()
+            R.id.dev_notification -> frag = NotificationFragment()
+            R.id.dev_question_receiver -> frag = QuestionReceiverFragment()
+        }
+
+        if (frag!= null) {
+            var fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fragment_layout, frag)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+        }
+    }
 
     fun changeView(item: MenuItem?) {
         var frag: Fragment? = null
@@ -174,16 +190,13 @@ MoreFragment.OnFragmentInteractionListener{
             R.id.navigation_talks -> frag = TalkFragment()
             R.id.navigation_question -> frag = QuestionFragment()
             R.id.navigation_details-> frag = DetailsFragment()
-            R.id.navigation_notification -> frag = NotificationFragment()
-            R.id.navigation_question_receiver -> frag = QuestionReceiverFragment()
-            //R.id.navigation_question_receiver -> frag = QuestionReceiverFragment()
         }
 
-        mSelectedItem = item.itemId
+        mSelectedItem = item!!.itemId
 
-        for (i in 0 until navigation.menu.size() - 1) {
+        for (i in 0 until navigation.menu.size()) {
             val menuItem = navigation.menu.getItem(i)
-            menuItem.isChecked = menuItem.itemId == item.itemId
+            menuItem.isChecked = (menuItem.itemId == item!!.itemId)
         }
         if (frag!= null) {
             var fragmentTransaction = supportFragmentManager.beginTransaction()

@@ -178,7 +178,7 @@ class NotificationService : Service() {
             if (notification.repeat != null) {
                 val endTime = Date(notification.end!!.time - delayInMillis)
                 // determine that the time is the same but day is different and falls between the start and end date
-                if (time.after(triggerNotiTime) && time.before(endTime)) {
+                if (time.time >= triggerNotiTime.time && time.time <= endTime.time) {
                     calendar.time = triggerNotiTime
 
                     calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -296,6 +296,7 @@ class NotificationService : Service() {
 
     private fun checkDB() {
         notis.clear()
+        instantNotis.clear()
         var collection = db.collection("notis")
 
         collection.get().addOnSuccessListener {result->
@@ -312,10 +313,10 @@ class NotificationService : Service() {
                 if (document.get("now") != null) {
                     // For debug. retrieve if the notification is to be sent immediately or wait for a certain time.
                     val now = document.get("now") as Boolean
-                    Log.d(TAG, "now: $now")
+                   // Log.d(TAG, "now: $now")
 
                     instantNotis.add(Notification(date!!, delay, description, document.id))
-                    sendInstantNotification()
+
                 } else {
                     //Log.d(TAG, "delayedNotification")
                     // if the notification is repeating
@@ -332,9 +333,15 @@ class NotificationService : Service() {
                         notis.add(Notification(date!!, delay, description))
                     }
 
-                    checkForOccuringNotification()
+
                 }
 
+            }
+            if (instantNotis.size > 0) {
+                sendInstantNotification()
+            }
+            if (notis.size > 0) {
+                checkForOccuringNotification()
             }
             //if (false) {
 
