@@ -1,22 +1,30 @@
 PODS:
+  - AppCenter (1.12.0):
+    - AppCenter/Analytics (= 1.12.0)
+    - AppCenter/Crashes (= 1.12.0)
+  - AppCenter/Analytics (1.12.0):
+    - AppCenter/Core
+  - AppCenter/Core (1.12.0)
+  - AppCenter/Crashes (1.12.0):
+    - AppCenter/Core
   - BoringSSL (10.0.6):
     - BoringSSL/Implementation (= 10.0.6)
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
-  - Firebase/Auth (5.14.0):
+  - Firebase/Auth (5.15.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (= 5.1.0)
-  - Firebase/Core (5.14.0):
+    - FirebaseAuth (= 5.2.0)
+  - Firebase/Core (5.15.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.4.0)
-  - Firebase/CoreOnly (5.14.0):
-    - FirebaseCore (= 5.1.9)
-  - Firebase/Firestore (5.14.0):
+  - Firebase/CoreOnly (5.15.0):
+    - FirebaseCore (= 5.1.10)
+  - Firebase/Firestore (5.15.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (= 0.16.0)
-  - Firebase/Storage (5.14.0):
+    - FirebaseFirestore (= 0.16.1)
+  - Firebase/Storage (5.15.0):
     - Firebase/CoreOnly
     - FirebaseStorage (= 3.0.3)
   - FirebaseAnalytics (5.4.0):
@@ -28,23 +36,23 @@ PODS:
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (5.1.0):
+  - FirebaseAuth (5.2.0):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - GoogleUtilities/Environment (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (5.1.9):
+  - FirebaseCore (5.1.10):
     - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseFirestore (0.16.0):
+  - FirebaseFirestore (0.16.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
-    - FirebaseFirestore/abseil-cpp (= 0.16.0)
+    - FirebaseFirestore/abseil-cpp (= 0.16.1)
     - "gRPC-C++ (= 0.0.5)"
     - leveldb-library (~> 1.20)
     - nanopb (~> 0.3.8)
     - Protobuf (~> 3.1)
-  - FirebaseFirestore/abseil-cpp (0.16.0):
+  - FirebaseFirestore/abseil-cpp (0.16.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - "gRPC-C++ (= 0.0.5)"
@@ -59,7 +67,7 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FontAwesome.swift (1.4.6)
+  - FontAwesome.swift (1.4.7)
   - GoogleAppMeasurement (5.4.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
     - GoogleUtilities/MethodSwizzler (~> 5.2)
@@ -115,8 +123,10 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.6.1)
+  - youtube-ios-player-helper (0.1.4)
 
 DEPENDENCIES:
+  - AppCenter
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
@@ -124,9 +134,11 @@ DEPENDENCIES:
   - FontAwesome.swift
   - GoogleMaps
   - GooglePlaces
+  - youtube-ios-player-helper (= 0.1.4)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - AppCenter
     - BoringSSL
     - Firebase
     - FirebaseAnalytics
@@ -147,18 +159,20 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
+    - youtube-ios-player-helper
 
 SPEC CHECKSUMS:
+  AppCenter: 4d27bdafd74b1b3e90946b9989fd6011a7e39c5e
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
-  Firebase: 963d5685fae888a56d6d4d9cfce6b9c976958798
+  Firebase: 8bb9268bff82374f2cbaaabb143e725743c316ae
   FirebaseAnalytics: c06f9d70577d79074214700a71fd5d39de5550fb
-  FirebaseAuth: 4a5cc5fc2d1721e509e24699b93ebc3d94b1e195
+  FirebaseAuth: 02e969ff430e156d99d4cb842d77b806b71ad7bb
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: 8f49b70f57ab5cbb032ef41d64992ded21606459
-  FirebaseFirestore: 0b2495ff27e5749fa0984c405ea58db3d070e075
+  FirebaseCore: 35747502d9e8c6ee217385ad04446c7c2aaf9c5c
+  FirebaseFirestore: 58043a1c2d2c91efdaa8d8f385cdbaa2ce750cfe
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseStorage: 3d22c041370593e639fba013d1eb698a8dae2881
-  FontAwesome.swift: 18fb500c0decc2bbfadf2ae16a936704ec2c49bd
+  FontAwesome.swift: ed820aa59420c3c5e1b087afa3f3a78373fc5300
   GoogleAppMeasurement: 98b71f5e04142793729a5ef23e5b96651ff4b70f
   GoogleMaps: f79af95cb24d869457b1f961c93d3ce8b2f3b848
   GooglePlaces: 3d06e6c99654545b4738ce49648745779c25f2ef
@@ -169,7 +183,8 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
+  youtube-ios-player-helper: 84b1485ebb4b7c6b619c6e05edcb55186723a7c6
 
-PODFILE CHECKSUM: baa76aec6b7711fc4b3ece15166428a7967227e4
+PODFILE CHECKSUM: f3ecb0270c9d1381be6ee3f771ff0e1653ab5afc
 
 COCOAPODS: 1.5.3

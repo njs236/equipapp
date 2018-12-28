@@ -8,32 +8,47 @@
 
 import UIKit
 import GoogleMaps
+import Firebase
 
 class MapViewController: UIViewController, GMSMapViewDelegate {
 
     override func loadView() {
+        let db = Firestore.firestore()
         let camera = GMSCameraPosition.camera(withLatitude: -43.38791875701529, longitude: 172.64559879899025, zoom: 19.1)
         let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+         mapView.mapType = GMSMapViewType.hybrid
+        db.collection("maps").getDocuments { (documentSnapshot, error) in
+            for document in documentSnapshot!.documents {
+                if (document.get("center") != nil) {
+                    let position = document.get("position") as! GeoPoint
+                    let lat = position.latitude
+                    let lng = position.longitude
+                    let zoom = document.get("zoom") as! NSNumber
+                    let cameraPosition = GMSCameraPosition.camera(withLatitude: lat, longitude: lng, zoom: zoom.floatValue)
+                    let move = GMSCameraUpdate.setCamera(cameraPosition)
+                    mapView.moveCamera(move)
+                } else {
+                    let marker = GMSMarker()
+                    let position = document.get("position") as! GeoPoint
+                    let lat = position.latitude
+                    let lng = position.longitude
+                    let title = document.get("title") as! String
+                    marker.position = CLLocationCoordinate2DMake(lat, lng)
+                    marker.title = title
+                    marker.map = mapView
+                }
+            }
+        }
+        
+       
         
         view = mapView
         // Main Auditorium
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -43.38747336005181, longitude: 172.6455733180046)
-        marker.title = "Main Auditorium"
-        marker.map = mapView
         
-        let meetingArea = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -43.38833393810643, longitude: 172.64617078006268)
-        marker.title = "Food and Fellowship"
-        meetingArea.map = mapView
-        
-        mapView.mapType = GMSMapViewType.hybrid
+       
         
     }
     
-    func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        
-    }
 
 
 }

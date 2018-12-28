@@ -1,5 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 target 'equipapp' do
+  pod 'AppCenter'
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'Firebase/Core'
@@ -7,4 +8,5 @@ target 'equipapp' do
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
   pod 'FontAwesome.swift'
+  pod 'youtube-ios-player-helper', '0.1.4'
 end

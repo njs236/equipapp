@@ -39,23 +39,56 @@ class QuestionViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
         let date = Date()
         let cr_date = dateFormatter.string(from: date)
+        let speaker1 = "Paul Dale"
+        let speaker2 = "Dave Clancey"
         
         //TODO: parsing info from fields.
         
-        
-        let db = Firestore.firestore()
-        var ref : DocumentReference? = nil
-        ref = db.collection("questions").addDocument(data: [
-            "author": author,
-            "speaker" : speaker,
-            "question" : question,
-            "cr_date": date
+        if (question == "") {
+            let alert = UIAlertController(title: "", message: "Please enter a question.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {action in
+                switch action.style{
+                case .default:
+                    print("default")
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            }))
+            self.present(alert, animated: true, completion: nil)
             
-        ]){ err in
-            if let err = err {
-                print ("Error adding document: \(err)")
-            } else {
-                print ("Document added with ID: \(ref!.documentID)")
+        } else if (speaker == "") {
+            let alert = UIAlertController(title: "", message: "Please enter a valid speaker.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {action in
+                switch action.style{
+                case .default:
+                    print("default")
+                case .cancel:
+                    print("cancel")
+                case .destructive:
+                    print("destructive")
+                }
+            }))
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+        
+        
+            let db = Firestore.firestore()
+            var ref : DocumentReference? = nil
+            ref = db.collection("questions").addDocument(data: [
+                "author": author,
+                "speaker" : speaker,
+                "question" : question,
+                "cr_date": date
+            
+            ]){ err in
+                if let err = err {
+                    print ("Error adding document: \(err)")
+                } else {
+                    print ("Document added with ID: \(ref!.documentID)")
+                }
             }
         }
         
