@@ -15,19 +15,22 @@
             android:background="@color/white"
             app:titleTextColor="@color/black"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="@+id/fragment_layout"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp">
     </android.support.v7.widget.Toolbar>-->
 
     <FrameLayout
             android:id="@+id/fragment_layout"
-            android:layout_width="match_parent"
-            android:layout_height="1077dp"
-            app:layout_constraintBottom_toTopOf="@+id/navigation"
+            android:layout_width="387dp"
+            android:layout_height="518dp" android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"/>
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/navigation" app:layout_constraintTop_toTopOf="parent"/>
 
-    <android.support.design.widget.BottomNavigationView
+   <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="59dp"
