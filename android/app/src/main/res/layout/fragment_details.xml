@@ -21,95 +21,86 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                <TextView
-                        android:id="@+id/details_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_title"
-                        android:textAlignment="center"
-                        android:textSize="32sp"
-                        tools:textColor="@android:color/white"/>
+                <android.support.v7.widget.AppCompatImageView android:layout_width="match_parent"
+                                                              android:layout_height="wrap_content"
+                android:src="@drawable/logo_small"/>
 
             </LinearLayout>
 
 
-            <LinearLayout android:id="@+id/ll_details_video" android:layout_width="match_parent" android:layout_height="match_parent">
+            <LinearLayout android:id="@+id/ll_details_menu"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-                <FrameLayout
-                        android:padding="10dp"
-                        android:id="@+id/playerView_details"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp">
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                android:id="@+id/ll_details_menu_map"
+                              android:layout_gravity="center"
+                              android:paddingBottom="15dp">
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/ic_map_white_24dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="@string/title_map"
+                              android:textColor="@color/white"
+                    android:textSize="20sp"/>
 
-                </FrameLayout>
-
-            </LinearLayout>
-            <LinearLayout android:padding="10dp" android:baselineAligned="false" android:weightSum="2" android:orientation="horizontal" android:id="@+id/ll_details_speakers" android:layout_width="match_parent" android:layout_height="wrap_content">
-                <LinearLayout android:paddingStart="0dp" android:paddingEnd="10dp" android:orientation="vertical" android:id="@+id/ll_speaker1" android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="wrap_content">
-
-                    <ImageView
-                            android:contentDescription="@string/paul_dale_photo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" app:srcCompat="@drawable/paul_dale"
-                            android:id="@+id/iv_details_speaker1"
-                            android:layout_marginTop="0dp" android:layout_marginEnd="0dp"/>
-                    <TextView
-                            android:text="@string/speaker1_info"
-                            android:layout_width="wrap_content"
-                            android:textColor="@color/white"
-                            android:layout_height="wrap_content" android:id="@+id/tv_details_speaker1"/>
-                </LinearLayout>
-                <LinearLayout android:paddingStart="10dp" android:paddingEnd="0dp" android:orientation="vertical" android:id="@+id/ll_speaker2" android:layout_width="wrap_content" android:layout_weight="1" android:layout_height="wrap_content">
-
-
-                    <ImageView
-                            android:contentDescription="@string/dave_clancey_photo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" app:srcCompat="@drawable/dave_clancey"
-                            android:id="@+id/iv_details_speaker2"/>
-                    <TextView
-                            android:text="@string/speaker2_info"
-                            android:layout_width="wrap_content"
-                            android:textColor="@color/white"
-                            android:layout_height="wrap_content" android:id="@+id/tv_details_speaker2"/>
                 </LinearLayout>
 
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/ll_details_menu_question"
+                              android:layout_gravity="center"
+                              android:paddingBottom="15dp">
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/ic_message_white_24dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="@string/title_question"
+                              android:textColor="@color/white"
+                              android:textSize="20sp"/>
+
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/ll_details_menu_talks"
+                              android:layout_gravity="center"
+                              android:paddingBottom="15dp">
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/ic_audiotrack_white_24dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="@string/title_talks"
+                              android:textColor="@color/white"
+                              android:textSize="20sp"/>
+
+                </LinearLayout>
+                <LinearLayout android:orientation="horizontal"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/ll_details_menu_timetable"
+                              android:layout_gravity="center"
+                              android:paddingBottom="15dp">
+                    <ImageView android:layout_width="24dp"
+                               android:layout_height="24dp"
+                               android:src="@drawable/planner"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="@string/title_timetable"
+                              android:textColor="@color/white"
+                              android:textSize="20sp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
-            <RelativeLayout android:padding="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
 
-                <TextView android:text="@string/register"
-                          android:textColor="@color/white"
-                          android:textSize="30sp"
-                          android:layout_centerInParent="true"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"/>
-
-            </RelativeLayout>
-            <LinearLayout
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
-                    android:id="@+id/ll_register"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-            android:weightSum="2">
-                <Button
-                        android:id="@+id/btn_details_register"
-                        android:layout_width="wrap_content"
-                        android:text="@string/details_register_south"
-                        android:textSize="20sp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"/>
-                <Button
-                        android:id="@+id/btn_details_register_north"
-                        android:layout_width="wrap_content"
-                        android:text="@string/details_register_north"
-                        android:textSize="20sp"
-                       android:layout_weight="1"
-                        android:layout_height="wrap_content"/>
-            </LinearLayout>
 
        </LinearLayout>
 

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Equip Conference</string>
     <string name="title_map">Map</string>
-    <string name="title_details">Details</string>
+    <string name="title_details">Home</string>
     <string name="title_talks">Talks</string>
     <string name="title_question">Question</string>
     <string name="title_home">Home</string>
@@ -43,4 +43,5 @@
     <string name="next_recordings">Go Forward</string>
     <string name="valid_speaker">Please enter a valid speaker name</string>
     <string name="nonempty_question">Please enter a question</string>
+    <string name="title_timetable">Timetable</string>
 </resources>

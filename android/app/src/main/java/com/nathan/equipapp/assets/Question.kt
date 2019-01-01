@@ -12,14 +12,18 @@ class Question {
     var speaker: String
     var date: Date
     var formattedDate: String? = ""
+    var documentID: String? = ""
 
-            constructor (newSpeaker: String, newAuthor: String, newDescription: String, newDate: Date) {
+            constructor (newSpeaker: String, newAuthor: String, newDescription: String, newDate: Date, id: String) {
                 this.speaker = newSpeaker
                 this.author = newAuthor
                 this.description = newDescription
                 this.date = newDate
+                documentID = id
                 createDate()
             }
+
+
 
     fun createDate() {
 

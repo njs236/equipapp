@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import android.widget.Toast
+import android.widget.Toolbar
 //import jdk.nashorn.internal.runtime.ECMAException.getException
 //import org.junit.experimental.results.ResultMatchers.isSuccessful
 import com.nathan.equipapp.R
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity(), DetailsFragment.OnFragmentInteractionL
     TalkFragment.OnFragmentInteractionListener,
 NotificationFragment.OnFragmentInteractionListener,
 QuestionReceiverFragment.OnFragmentInteractionListener,
-MoreFragment.OnFragmentInteractionListener{
+MoreFragment.OnFragmentInteractionListener,
+TimetableFragment.OnFragmentInteractionListener{
+
+
     val TAG = this.javaClass.simpleName
     private var mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private var mSelectedItem: Int = -1
@@ -51,7 +55,8 @@ MoreFragment.OnFragmentInteractionListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         setContentView(R.layout.activity_main)
-        //setSupportActionBar(findViewById(R.id.app_toolbar))
+        setSupportActionBar(findViewById(R.id.app_toolbar))
+        supportActionBar?.setIcon(R.mipmap.ic_launcher)
 
 
         val selectedItem: MenuItem
@@ -170,9 +175,10 @@ MoreFragment.OnFragmentInteractionListener{
     fun subMenu(item: MenuItem?) {
         var frag: Fragment? = null
         when (item!!.itemId) {
-            R.id.dev_talks -> frag = TalkFragment()
+            //R.id.dev_talks -> frag = TalkFragment()
             R.id.dev_notification -> frag = NotificationFragment()
             R.id.dev_question_receiver -> frag = QuestionReceiverFragment()
+            R.id.dev_timetable -> frag = TimetableFragment()
         }
 
         if (frag!= null) {
@@ -211,7 +217,19 @@ MoreFragment.OnFragmentInteractionListener{
     }
 
     override fun onDetailsInteraction(uri: Uri) {
-        //TODO("not implemented") To change body of created functions use File | Settings | File Templates.
+        if (uri.toString() == "talks") {
+            val item = navigation.menu.getItem(1)
+            changeView(item)
+        } else if (uri.toString() == "map") {
+            val item = navigation.menu.getItem(0)
+            changeView(item)
+        } else if (uri.toString() == "question") {
+            val item = navigation.menu.getItem(2)
+            changeView(item)
+        } else if (uri.toString() == "timetable") {
+            val item = findViewById<android.support.v7.widget.Toolbar>(R.id.app_toolbar).menu.getItem(0)
+            subMenu(item)
+        }
     }
 
     override fun onMapInteraction(uri: Uri) {
@@ -231,6 +249,10 @@ MoreFragment.OnFragmentInteractionListener{
     }
 
     override fun onMoreInteraction(uri: Uri) {
+        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onTimetableInteraction(uri: Uri) {
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

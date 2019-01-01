@@ -15,6 +15,7 @@ import com.google.firebase.firestore.Query
 import com.nathan.equipapp.MyApplication
 import com.nathan.equipapp.R
 import com.nathan.equipapp.assets.Question
+import org.w3c.dom.Text
 import java.sql.Timestamp
 import java.util.*
 
@@ -82,6 +83,7 @@ class QuestionReceiverFragment: Fragment() {
     }
 
     private fun getQuestionsData() {
+        questions.clear()
 
         var questionsCollection = db.collection("questions")
 
@@ -93,6 +95,7 @@ class QuestionReceiverFragment: Fragment() {
                 val speaker = document.get("speaker") as String
                 val timestamp = document.getTimestamp("cr_date")
                 val description = document.get("question") as String
+                val id = document.id
                 val date = timestamp?.toDate()
 
                 Log.d(TAG, "author: $author")
@@ -100,7 +103,7 @@ class QuestionReceiverFragment: Fragment() {
                 Log.d(TAG, "cr_date: ${date.toString()}")
                 Log.d(TAG, "question: $question")
 
-                questions.add(Question(speaker, author, description, date!!))
+                questions.add(Question(speaker, author, description, date!!, id))
                 //TODO: writing a mutable list that holds the data needed for the table
             }
             fillTable()
@@ -119,6 +122,7 @@ class QuestionReceiverFragment: Fragment() {
     }
 
     private fun fillTable() {
+        tbl_questions_layout?.removeAllViews()
         var lp = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT)
         lp.setMargins(10,10,10,10)
 
@@ -127,6 +131,15 @@ class QuestionReceiverFragment: Fragment() {
             val speaker = row.findViewById<TextView>(R.id.row_question_speaker)
             val description = row.findViewById<TextView>(R.id.row_question_description)
             val author = row.findViewById<TextView>(R.id.row_question_author)
+            val trash = row.findViewById<TextView>(R.id.question_trash)
+            trash.setOnClickListener { view->
+
+                db?.collection("questions").document(question.documentID!!).delete().addOnSuccessListener { result->
+                    Log.d(TAG, "deleted document")
+                }
+                getQuestionsData()
+
+            }
             speaker.text = question.speaker
             description.text = question.description
             author.text = question.author

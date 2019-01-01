@@ -1,14 +1,23 @@
 package com.nathan.equipapp.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
+import android.support.v7.widget.LinearLayoutCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TableLayout
+import android.widget.TextView
 
 import com.nathan.equipapp.R
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +38,9 @@ class TimetableFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var timetableLayout : View?= null
+    private var timetable_content: LinearLayout? = null
+    private var TAG = this.javaClass.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +55,14 @@ class TimetableFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timetable, container, false)
+       timetableLayout = inflater.inflate(R.layout.fragment_timetable, container, false)
+        inflateTimetable()
+        return timetableLayout
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
+        listener?.onTimetableInteraction(uri)
     }
 
     override fun onAttach(context: Context) {
@@ -78,7 +92,56 @@ class TimetableFragment : Fragment() {
      */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
+        fun onTimetableInteraction(uri: Uri)
+    }
+
+    fun inflateTimetable() {
+        // find content tab.
+        timetable_content = timetableLayout?.findViewById(R.id.timetable_content)
+        // for each day
+        readTableData()
+
+    }
+
+    fun readTableData(): ArrayList<String> {
+        val days: Array<String> = arrayOf(
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+
+        var fileIn = context?.assets?.open("timetable.txt")
+        var reader = InputStreamReader(fileIn)
+        var speakerlist = ArrayList<String>()
+        var inputString = BufferedReader(reader).useLines { lines->
+            val results = StringBuilder()
+            lines.forEach {
+                Log.d(TAG, "it: $it")
+                var lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                lp.setMargins(10,10,10,10)
+                val row = LinearLayout(context)
+                if (days.contains(it)) {
+                    val colorValue = ContextCompat.getColor(context!!, R.color.grey)
+                    row.setBackgroundColor(colorValue)
+                }
+                row.orientation = LinearLayout.HORIZONTAL
+                row.layoutParams = lp
+                val text = TextView(context)
+                text.text = it
+                row.addView(text)
+                timetable_content?.addView(row, lp)
+
+
+
+
+
+
+
+            }
+            results.toString()
+        }
+        return speakerlist
+
+
+
+
     }
 
     companion object {

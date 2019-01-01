@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.youtube.player.*
 import com.nathan.equipapp.R
@@ -48,6 +49,10 @@ class DetailsFragment : Fragment() {
     private var register_south: Button? = null
     private var register_north: Button? = null
     private var details_title: TextView? = null
+    private var ll_menu_map : LinearLayout? = null
+    private var ll_menu_question: LinearLayout? = null
+    private var ll_menu_talks: LinearLayout? = null
+    private var ll_menu_timetable: LinearLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,29 +121,18 @@ class DetailsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
        var view = inflater.inflate(R.layout.fragment_details, container, false)
-        details_title = view.findViewById(R.id.details_title)
-        details_title?.setTextColor(resources.getColor(R.color.white))
-        tv_speaker1 = view.findViewById(R.id.tv_details_speaker1)
-        tv_speaker2 = view.findViewById(R.id.tv_details_speaker2)
-        register_north = view.findViewById(R.id.btn_details_register_north)
-        register_north?.setOnClickListener { view->
+        ll_menu_map = view.findViewById(R.id.ll_details_menu_map)
+        ll_menu_question = view.findViewById(R.id.ll_details_menu_question)
+        ll_menu_talks = view.findViewById(R.id.ll_details_menu_talks)
+        ll_menu_timetable = view.findViewById(R.id.ll_details_menu_timetable)
 
-            val i = Intent(Intent.ACTION_VIEW)
-            i.setData(Uri.parse(northRegisterUrl))
-            startActivity(i)
-        }
-        register_south = view.findViewById(R.id.btn_details_register)
-        register_south?.setOnClickListener { view->
-
-            val i = Intent(Intent.ACTION_VIEW)
-            i.setData(Uri.parse(registerUrl))
-            startActivity(i)
-        }
-
-        writeSpeakerText()
+        ll_menu_map?.setOnClickListener { onButtonPressed(Uri.parse("map")) }
+        ll_menu_question?.setOnClickListener { onButtonPressed(Uri.parse("question")) }
+        ll_menu_talks?.setOnClickListener { onButtonPressed(Uri.parse("talks")) }
+        ll_menu_timetable?.setOnClickListener { onButtonPressed(Uri.parse("timetable")) }
         return view
     }
-
+/*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         youtube_viewer = YouTubePlayerSupportFragment()
         val transaction = childFragmentManager.beginTransaction()
@@ -146,7 +140,7 @@ class DetailsFragment : Fragment() {
         youtube_viewer!!.initialize(DeveloperKey.DEVELOPER_KEY, youtubeOnInitializedListener)
 
     }
-
+*/
 
 
     // TODO: Rename method, update argument and hook method into UI event
